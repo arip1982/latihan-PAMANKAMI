@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulasi PAMAN KAMI — Penilaian Mandiri Keamanan Informasi UMKM</title>
+<style>
+:root{--navy:#12304a;--blue:#1769aa;--teal:#078a80;--bg:#f3f6fa;--ink:#203040;--muted:#627386;--line:#dce4ec;--white:#fff;--warn:#a85c00}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:linear-gradient(120deg,#12304a,#1769aa);color:white;padding:28px 18px}
+.wrap{max-width:1080px;margin:auto;padding:0 16px}header .wrap{padding:0 16px}
+.brand{font-size:12px;letter-spacing:.12em;font-weight:800;opacity:.85;text-transform:uppercase}
+h1{font-size:clamp(25px,4vw,36px);line-height:1.15;margin:8px 0}
+header p{max-width:780px;margin:10px 0 0;color:#e7f2fb}
+main{padding:22px 0 48px}.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:18px;align-items:start}
+.panel,.card{background:var(--white);border:1px solid var(--line);border-radius:16px;box-shadow:0 3px 12px #16344d0a}
+.panel{padding:17px;position:sticky;top:14px}.card{padding:22px;margin-bottom:16px}
+h2{font-size:20px;margin:0 0 14px;color:var(--navy)}h3{font-size:16px;margin:0 0 7px}
+label{display:block;font-weight:650;margin:12px 0 6px}
+input[type=text],input[type=date],select,textarea{width:100%;border:1px solid #c8d4df;border-radius:9px;padding:11px 12px;font:inherit;background:white;color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:3px solid #1769aa22;border-color:var(--blue)}
+.small{font-size:12px;color:var(--muted)}.muted{color:var(--muted)}.progress-track{height:8px;background:#e7edf3;border-radius:99px;overflow:hidden;margin:8px 0}
+.progress-bar{height:100%;width:0;background:var(--teal);transition:width .2s}
+.stat{display:flex;justify-content:space-between;gap:10px;margin:8px 0;font-size:13px}
+.btns{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+button{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:750;cursor:pointer}
+.primary{background:var(--blue);color:white}.secondary{background:#eaf1f7;color:var(--navy)}.outline{background:white;border:1px solid var(--line);color:var(--navy)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.notice{padding:12px 14px;border-radius:10px;background:#fff8e8;border:1px solid #f0d7a6;color:#694600;font-size:13px}
+.section-title{margin:24px 0 10px;padding-bottom:8px;border-bottom:1px solid var(--line);color:var(--navy);font-size:17px}
+.question{padding:16px 0;border-bottom:1px solid #edf1f5}.question:last-child{border-bottom:0}
+.qhead{display:flex;gap:10px;align-items:flex-start}.qnum{min-width:42px;text-align:center;background:#eaf3fb;color:#155a8c;border-radius:8px;padding:5px 7px;font-weight:800;font-size:13px}
+.qtext{font-weight:600}.choices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0 0 52px}
+.choice{position:relative}.choice input{position:absolute;opacity:0;pointer-events:none}.choice span{display:block;border:1px solid #d4dee8;border-radius:9px;padding:9px 7px;text-align:center;font-size:12px;background:white;cursor:pointer;height:100%}
+.choice input:checked+span{background:#e4f5f2;border-color:var(--teal);box-shadow:inset 0 0 0 1px var(--teal);color:#075e58;font-weight:800}
+.choice span b{display:block;font-size:13px;margin-bottom:2px}
+.result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
+.metric{border:1px solid var(--line);border-radius:12px;padding:14px}.metric .value{font-size:27px;font-weight:850;color:var(--navy)}.metric .label{font-size:12px;color:var(--muted)}
+.pill{display:inline-block;border-radius:99px;padding:4px 10px;font-weight:800;font-size:12px;background:#eaf1f7;color:var(--navy)}
+.resultbar{height:14px;background:#e7edf3;border-radius:99px;overflow:hidden}.resultbar>div{height:100%;width:0;background:var(--teal)}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f6f9fc;color:var(--navy)}
+.hidden{display:none!important}.footer{margin-top:18px;color:var(--muted);font-size:12px;text-align:center}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.panel{position:static}.choices{margin-left:0}.result-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:460px){.card{padding:15px}.choices{grid-template-columns:repeat(2,minmax(0,1fr))}.result-grid{grid-template-columns:1fr 1fr}.result-grid .metric:last-child{grid-column:1/-1}}
+@media print{
+ body{background:white;font-size:11pt;color:#111}header{background:white!important;color:#111;padding:0 0 12px}header p{color:#333}.wrap{max-width:none;padding:0}main{padding:0}.layout{display:block}.panel,.no-print,button{display:none!important}.card{box-shadow:none;border:0;padding:0;margin:0 0 16px;break-inside:avoid}.question{break-inside:avoid;padding:9px 0}.choices{margin-left:45px;grid-template-columns:repeat(4,1fr)}.choice span{padding:5px;font-size:9pt}.choice input:checked+span{background:#e4f5f2!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.result-grid{grid-template-columns:repeat(3,1fr)}.section-title{margin-top:16px}.footer{display:block}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brand">PAMAN KAMI • Simulasi edukasi</div>
+  <h1>Penilaian Mandiri Keamanan Informasi UMKM</h1>
+  <p>Isi penilaian berdasarkan kondisi nyata usaha Anda. Hasil ini membantu mengenali praktik keamanan yang sudah diterapkan dan menentukan langkah perbaikan.</p>
+</div></header>
+<main class="wrap">
+<div class="layout">
+  <aside class="panel no-print">
+    <h2>Informasi responden</h2>
+    <label for="respondent">Nama responden</label><input id="respondent" type="text" placeholder="Nama pemilik / pengelola UMKM">
+    <label for="role">Peran responden</label>
+    <select id="role"><option value="">Pilih peran</option><option>Pemilik usaha</option><option>Pengelola usaha</option><option>Karyawan / operator</option><option>Fasilitator / pendamping</option><option>Lainnya</option></select>
+    <label for="business">Nama usaha</label><input id="business" type="text" placeholder="Contoh: Toko Online Nusa">
+    <label for="owner">Nama fasilitator (jika ada)</label><input id="owner" type="text" placeholder="Nama fasilitator / pendamping (opsional)">
+    <label for="sector">Jenis usaha</label>
+    <select id="sector"><option value="">Pilih jenis usaha</option><option>Perdagangan / toko online</option><option>Makanan dan minuman</option><option>Jasa</option><option>Kerajinan / produksi</option><option>Pariwisata / akomodasi</option><option>Lainnya</option></select>
+    <label for="location">Kabupaten / kota dan provinsi</label><input id="location" type="text" placeholder="Contoh: Batam, Kepulauan Riau">
+    <label for="employees">Jumlah pekerja</label>
+    <select id="employees"><option value="">Pilih jumlah pekerja</option><option>1–4 orang</option><option>5–19 orang</option><option>20–99 orang</option><option>100 orang atau lebih</option></select>
+    <label for="date">Tanggal penilaian</label><input id="date" type="date">
+    <div style="margin-top:20px"><h3>Progres penilaian</h3><div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="stat"><span>Terjawab</span><strong id="answered">0 / 25</strong></div>
+      <div class="stat"><span>Nilai sementara</span><strong id="liveScore">—</strong></div>
+      <div class="small">Nilai akhir dihitung setelah seluruh pertanyaan dijawab.</div>
+    </div>
+    <div class="btns"><button class="primary" id="showResultBtn" type="button">Lihat hasil</button><button class="secondary" id="saveBtn" type="button">Simpan di browser</button><button class="outline" id="loadBtn" type="button">Muat simpanan</button></div>
+    <p id="saveStatus" class="small" aria-live="polite"></p>
+    <div class="notice" style="margin-top:15px">Simulasi ini berjalan di perangkat Anda. Data tidak dikirim ke server. Jangan masukkan kata sandi, PIN, OTP, atau data sensitif pelanggan.</div>
+  </aside>
+  <section>
+    <div class="card">
+      <h2>Petunjuk pengisian</h2>
+      <p>Untuk setiap pernyataan, pilih satu jawaban yang paling sesuai dengan penerapan saat ini. Bila praktik hanya diterapkan pada sebagian akun/perangkat atau belum konsisten, pilih <b>Diterapkan Sebagian</b>.</p>
+      <div class="result-grid">
+        <div class="metric"><div class="value">25</div><div class="label">Pernyataan penilaian</div></div>
+        <div class="metric"><div class="value">100</div><div class="label">Nilai maksimum</div></div>
+        <div class="metric"><div class="value">0–4</div><div class="label">Poin per pernyataan</div></div>
+      </div>
+      <div class="notice">Catatan tentang workbook: tabel nilai memuat DM = 4, DS = 2, TD = 1, dan TT = 0. Kategori hasil menggunakan ambang Buruk 0–49, Kurang 50–69, Cukup 70–89, Baik 90–99, dan Sempurna 100. Dengan 25 pertanyaan, nilai maksimum adalah 100.</div>
+    </div>
+    <form id="assessmentForm" class="card">
+      <h2>Pernyataan penilaian</h2>
+      <p class="small">Semua 25 pernyataan harus dijawab untuk menghasilkan nilai akhir.</p>
+      <div id="questions"></div>
+      <div class="btns no-print"><button class="primary" type="submit">Hitung hasil penilaian</button><button class="secondary" type="button" id="resetBtn">Mulai ulang</button></div>
+    </form>
+    <div id="results" class="card hidden">
+      <h2>Hasil penilaian mandiri</h2>
+      <p id="resultIntro"></p>
+      <h3 class="section-title">Informasi responden dan usaha</h3>
+      <div id="respondentSummary"></div>
+      <div class="result-grid">
+        <div class="metric"><div class="value" id="scoreValue">—</div><div class="label">Skor total / 100</div></div>
+        <div class="metric"><div class="value" id="categoryValue">—</div><div class="label">Kategori</div></div>
+        <div class="metric"><div class="value" id="answeredValue">25/25</div><div class="label">Pertanyaan terjawab</div></div>
+      </div>
+      <div class="resultbar"><div id="scoreBar"></div></div>
+      <p id="categoryDesc"></p>
+      <h3 class="section-title">Ringkasan jawaban</h3>
+      <div id="answerSummary"></div>
+      <h3 class="section-title">Rekomendasi perbaikan</h3>
+      <div id="recommendations"></div>
+      <h3 class="section-title">Catatan fasilitator / rencana tindak lanjut</h3>
+      <textarea id="notes" rows="4" placeholder="Tuliskan prioritas perbaikan, penanggung jawab, atau target waktu (opsional)."></textarea>
+      <div class="btns no-print"><button type="button" class="primary" id="pdfBtn">Cetak / Simpan PDF</button><button type="button" class="secondary" id="editBtn">Kembali ke jawaban</button></div>
+      <p class="small">Untuk PDF, pilih “Save as PDF / Simpan sebagai PDF” pada dialog cetak browser.</p>
+    </div>
+    <div class="footer">PAMAN KAMI — prototipe simulasi lokal untuk edukasi dan pendampingan UMKM. Bukan sertifikasi atau penetapan resmi.</div>
+  </section>
+</div>
+</main>
+<script>
+const QUESTIONS = [{"id": "1", "domain": "Identifikasi", "text": "Apakah Anda sudah mendata aset digital usaha, yaitu alat/perangkat elektronik dan data penting yang digunakan untuk usaha? (Misalnya: HP operasional, komputer kasir, akun media sosial, atau daftar kontak pelanggan)."}, {"id": "2", "domain": "Identifikasi", "text": "Apakah Anda rutin mengecek kondisi alat/perangkat elektronik (HP, laptop, komputer) dan data penting tersebut, serta memikirkan risiko yang terjadi jika alat/perangkat elektronik atau data itu rusak/hilang?"}, {"id": "3A", "domain": "Proteksi", "text": "Apakah kata sandi (password) alat/perangkat elektronik atau akun usaha Anda cukup kuat (berupa gabungan huruf besar dan kecil, angka, simbol, dan panjang minimal 8 karakter)?"}, {"id": "3B", "domain": "Proteksi", "text": "Apakah kerahasiaan kata sandi (password) Anda disimpan dengan aman dan tidak pernah diberikan kepada orang lain?"}, {"id": "3C", "domain": "Proteksi", "text": "Apakah Anda memakai kata sandi (password) yang berbeda-beda untuk setiap akun usaha, email, HP, alat/perangkat elektronik Anda?"}, {"id": "3D", "domain": "Proteksi", "text": "Apakah password akun usaha Anda rutin diganti, contohnya 3 bulan sekali?"}, {"id": "3E", "domain": "Proteksi", "text": "Apakah akun usaha Anda menggunakan verifikasi dua langkah (two factor authentication)?"}, {"id": "4", "domain": "Proteksi", "text": "Apakah dokumen dan informasi penting usaha disimpan dengan aman dan hanya dapat diakses oleh pihak yang berwenang?"}, {"id": "5", "domain": "Proteksi", "text": "Apakah Anda memastikan akses terhadap area kerja, perangkat, dan sistem usaha (termasuk akun administrator komputer/laptop, akun usaha) dibatasi hanya untuk pihak yang berwenang sesuai pembagian tugas karyawan?"}, {"id": "6", "domain": "Proteksi", "text": "Apakah Anda sudah menghapus informasi penting yang tidak terpakai dengan aman agar tidak terbaca lagi (misalnya menggunakan penghancur kertas / alat penghapus data, dll)?"}, {"id": "7", "domain": "Proteksi", "text": "Apakah Anda tidak menghubungkan komputer, laptop, dan smartphone Anda dengan jaringan internet (Wi-Fi) publik pada saat mengakses akun-akun penting atau melakukan transaksi keuangan?"}, {"id": "8A", "domain": "Proteksi", "text": "Apakah Anda mengenali serangan rekayasa sosial (social engineering) seperti modus penipuan online untuk memperoleh informasi penting usaha melalui telepon, pesan, email, atau media sosial? Misalnya, orang yang menelepon/chat mengaku dari bank atau kurir untuk meminta kode rahasia/OTP."}, {"id": "8B", "domain": "Proteksi", "text": "Apakah Anda selalu berhati-hati dan tidak sembarangan memberikan data penting (seperti KTP, KK, PIN, password, OTP, atau data pelanggan) kepada orang lain?"}, {"id": "8C", "domain": "Proteksi", "text": "Apakah Anda menghindari asal klik link (tautan), mengunduh dokumen, atau memasang aplikasi kiriman dari orang tidak dikenal melalui WhatsApp, Telegram, Marketplace atau media sosial?"}, {"id": "9", "domain": "Proteksi", "text": "Apakah Anda rutin melakukan update (pembaruan) pada aplikasi dan sistem di alat/perangkat elektronik (HP, laptop, komputer) yang dipakai untuk usaha?"}, {"id": "10", "domain": "Proteksi", "text": "Apakah Anda selalu menggunakan aplikasi resmi (bukan bajakan) yang diunduh dari tempat terpercaya (seperti Play Store atau App Store)?"}, {"id": "11", "domain": "Proteksi", "text": "Apakah Anda sudah mengingatkan rekan bisnis serta mewajibkan karyawan untuk menjaga kerahasiaan data usaha/pelanggan?"}, {"id": "12", "domain": "Proteksi", "text": "Apakah Anda sudah memasang antivirus pada alat/perangkat elektronik operasional (komputer, laptop, HP) dan rutin memperbaruinya?"}, {"id": "13", "domain": "Proteksi", "text": "Apakah Wi-Fi di tempat usaha Anda sudah dikunci dengan kata sandi (password) yang kuat, rutin diperbarui, memisahkan Wi-Fi usaha dan pelanggan, serta selalu dimatikan ketika tidak digunakan?"}, {"id": "14", "domain": "Proteksi", "text": "Sebelum menginstal aplikasi baru di alat/perangkat elektronik (HP, laptop, komputer), apakah Anda membaca syarat dan ketentuannya serta memastikan aplikasi tersebut tidak meminta izin akses yang berlebihan (misalnya aplikasi kasir meminta akses ke kontak atau galeri foto)?"}, {"id": "15", "domain": "Deteksi", "text": "Apakah Anda rutin mengecek riwayat login akun dan transaksi harian untuk memastikan tidak ada akses yang mencurigakan?"}, {"id": "16", "domain": "Penanggulangan", "text": "Apakah Anda tahu tindakan pertama untuk menangani kebocoran data, kehilangan, atau pencurian aset penting usaha? (Misalnya HP kasir hilang atau data Anda dicuri)."}, {"id": "17", "domain": "Penanggulangan", "text": "Apakah Anda mengetahui kontak aduan (layanan pihak berwajib atau bank) apabila terjadi penipuan online, kebocoran data, kehilangan, atau pencurian aset penting usaha?"}, {"id": "18", "domain": "Pemulihan", "text": "Apakah Anda sudah melakukan pencadangan (backup) terhadap seluruh informasi agar tidak hilang dan dapat digunakan setiap saat?"}, {"id": "19", "domain": "Pemulihan", "text": "Apakah Anda mengikuti literasi atau edukasi keamanan informasi, serta membagikan informasi tersebut?"}];
+const OPTIONS = [
+  {code:"DM",label:"Diterapkan Menyeluruh",score:4,desc:"Sudah diterapkan secara menyeluruh"},
+  {code:"DS",label:"Diterapkan Sebagian",score:2,desc:"Sudah diterapkan sebagian / belum konsisten"},
+  {code:"TD",label:"Tidak Diterapkan",score:1,desc:"Belum diterapkan"},
+  {code:"TT",label:"Tidak Tahu",score:0,desc:"Belum tahu / belum dapat memastikan"}
+];
+const CATEGORIES = [
+  {name:"BURUK",min:0,max:49,desc:"Keamanan informasi masih membutuhkan perhatian mendasar. Mulailah dari pengamanan akun, pembaruan perangkat, perlindungan data, dan kesiapan menghadapi insiden."},
+  {name:"KURANG",min:50,max:69,desc:"Terdapat beberapa kekurangan penting. Prioritaskan kontrol yang belum diterapkan dan buat rencana perbaikan sederhana dengan penanggung jawab serta target waktu."},
+  {name:"CUKUP",min:70,max:89,desc:"Praktik keamanan sudah cukup baik, tetapi masih ada ruang perbaikan. Tingkatkan konsistensi penerapan dan verifikasi bahwa praktik benar-benar berjalan."},
+  {name:"BAIK",min:90,max:99,desc:"Sebagian besar praktik keamanan sudah diterapkan. Periksa jawaban yang belum memperoleh nilai penuh dan pertahankan kebiasaan keamanan secara konsisten."},
+  {name:"SEMPURNA",min:100,max:100,desc:"Seluruh pernyataan memperoleh nilai penuh pada penilaian mandiri ini. Pertahankan penerapan, evaluasi secara berkala, dan sesuaikan kontrol saat usaha atau ancaman berubah."}
+];
+const DOMAIN_RECS = {
+ "Identifikasi":"Buat daftar aset digital: HP usaha, laptop/kasir, akun marketplace, email, data pelanggan, dan lokasi backup. Tentukan siapa yang bertanggung jawab dan cek kondisinya secara berkala.",
+ "Proteksi":"Aktifkan autentikasi dua langkah, gunakan kata sandi unik dan kuat, batasi akses sesuai tugas, pasang pembaruan, gunakan aplikasi resmi, amankan Wi-Fi, dan hindari Wi-Fi publik untuk transaksi penting.",
+ "Deteksi":"Periksa riwayat login, notifikasi keamanan, dan transaksi secara berkala. Jika menemukan aktivitas asing, dokumentasikan waktu dan bukti tanpa menghapus jejak.",
+ "Penanggulangan":"Siapkan langkah saat insiden: amankan akun dari perangkat tepercaya, ganti kata sandi yang terdampak, cabut sesi aktif, hubungi bank/platform terkait, simpan bukti, dan laporkan melalui kanal resmi.",
+ "Pemulihan":"Lakukan backup berkala, simpan salinan terpisah dari perangkat utama, uji pemulihan, dan tetapkan kontak aduan serta rencana agar usaha dapat kembali berjalan."
+};
+const CATEGORY_ORDER = ["Identifikasi","Proteksi","Deteksi","Penanggulangan","Pemulihan"];
+const $ = id => document.getElementById(id);
+const answers = {};
+const today = new Date();
+$("date").value = new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+
+function renderQuestions(){
+ const host=$("questions"); let lastSection="";
+ QUESTIONS.forEach((q,i)=>{
+   if(q.domain!==lastSection){const h=document.createElement("h3");h.className="section-title";h.textContent=q.domain;host.appendChild(h);lastSection=q.domain;}
+   const wrap=document.createElement("div");wrap.className="question";wrap.id="question-"+i;
+   const head=document.createElement("div");head.className="qhead";
+   const num=document.createElement("div");num.className="qnum";num.textContent=q.id;
+   const text=document.createElement("div");text.className="qtext";text.textContent=q.text;
+   head.append(num,text);wrap.appendChild(head);
+   const choices=document.createElement("div");choices.className="choices";
+   OPTIONS.forEach(opt=>{
+     const lab=document.createElement("label");lab.className="choice";
+     const input=document.createElement("input");input.type="radio";input.name="q"+i;input.value=opt.code;input.setAttribute("aria-label",opt.label+" ("+opt.score+" poin)");
+     input.addEventListener("change",()=>{answers[i]=opt.code;updateProgress();});
+     const span=document.createElement("span");const b=document.createElement("b");b.textContent=opt.code+" · "+opt.score;
+     const small=document.createElement("span");small.style.cssText="display:block;border:0;padding:0;background:transparent;font-size:11px;cursor:pointer";small.textContent=opt.label;
+     span.append(b,small);lab.append(input,span);choices.appendChild(lab);
+   });
+   wrap.appendChild(choices);host.appendChild(wrap);
+ });
+}
+function escapeHtml(value){return String(value).replace(/[&<>"']/g, ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
+function getOption(code){return OPTIONS.find(o=>o.code===code);}
+function getScore(){return QUESTIONS.reduce((sum,q,i)=>sum+(answers[i]!==undefined?getOption(answers[i]).score:0),0);}
+function answeredCount(){return Object.keys(answers).length;}
+function updateProgress(){
+ const n=answeredCount(),score=getScore();
+ $("answered").textContent=n+" / "+QUESTIONS.length;
+ $("progressBar").style.width=(n/QUESTIONS.length*100)+"%";
+ $("liveScore").textContent=n===QUESTIONS.length?score+"/100":score+" sementara";
+}
+function categoryFor(score){return CATEGORIES.find(c=>score>=c.min&&score<=c.max);}
+function getProfile(){return {respondent:$("respondent").value.trim(),role:$("role").value,business:$("business").value.trim(),owner:$("owner").value.trim(),sector:$("sector").value,location:$("location").value.trim(),employees:$("employees").value,date:$("date").value,notes:$("notes").value};}
+function showResults(){
+ const missing=QUESTIONS.map((q,i)=>answers[i]===undefined?i:-1).filter(i=>i>=0);
+ if(missing.length){$("question-"+missing[0]).scrollIntoView({behavior:"smooth",block:"center"});alert("Masih ada "+missing.length+" pertanyaan yang belum dijawab. Lengkapi semua pertanyaan terlebih dahulu.");return;}
+ const score=getScore(),cat=categoryFor(score),profile=getProfile();
+ $("results").classList.remove("hidden");$("scoreValue").textContent=score+"/100";$("categoryValue").textContent=cat.name;$("answeredValue").textContent=QUESTIONS.length+"/"+QUESTIONS.length;
+ $("scoreBar").style.width=score+"%";$("resultIntro").textContent=(profile.business||"Usaha belum diberi nama")+" • Tanggal penilaian: "+(profile.date||"-")+(profile.sector?" • "+profile.sector:"");
+ const respondentRows=[
+   ["Nama responden",profile.respondent],["Peran responden",profile.role],["Nama usaha",profile.business],
+   ["Jenis usaha",profile.sector],["Lokasi usaha",profile.location],["Jumlah pekerja",profile.employees],
+   ["Nama fasilitator",profile.owner],["Tanggal penilaian",profile.date]
+ ];
+ $("respondentSummary").innerHTML='<table><tbody>'+respondentRows.map(([k,v])=>'<tr><th style="width:36%">'+k+'</th><td>'+(v?escapeHtml(v):'—')+'</td></tr>').join('')+'</tbody></table>';
+ $("categoryDesc").textContent=cat.desc;
+ const counts={DM:0,DS:0,TD:0,TT:0};Object.values(answers).forEach(a=>counts[a]++);
+ let rows='<table><thead><tr><th>Jawaban</th><th>Jumlah</th><th>Poin per jawaban</th></tr></thead><tbody>';
+ OPTIONS.forEach(o=>rows+='<tr><td>'+o.code+' — '+o.label+'</td><td>'+counts[o.code]+'</td><td>'+o.score+'</td></tr>');
+ rows+='<tr><th colspan="2">Total skor</th><th>'+score+' / 100</th></tr></tbody></table>';$("answerSummary").innerHTML=rows;
+ const domainStats={};QUESTIONS.forEach((q,i)=>{if(!domainStats[q.domain])domainStats[q.domain]={score:0,max:0,weak:[]};const op=getOption(answers[i]);domainStats[q.domain].score+=op.score;domainStats[q.domain].max+=4;if(op.score<4)domainStats[q.domain].weak.push({q,op});});
+ let recHtml='<p>Prioritaskan pertanyaan yang dijawab <b>Diterapkan Sebagian</b>, <b>Tidak Diterapkan</b>, atau <b>Tidak Tahu</b>. Rekomendasi berikut adalah panduan praktis, bukan pengganti prosedur resmi.</p>';
+ CATEGORY_ORDER.forEach(domain=>{
+   const d=domainStats[domain];if(!d)return;
+   recHtml+='<div class="question"><h3>'+domain+' — '+d.score+'/'+d.max+' poin</h3>';
+   if(d.weak.length){recHtml+='<p>'+DOMAIN_RECS[domain]+'</p><ul>';d.weak.forEach(w=>{recHtml+='<li><b>'+w.q.id+'.</b> '+w.q.text+' <span class="pill">'+w.op.code+'</span></li>';});recHtml+='</ul>';}
+   else recHtml+='<p>Semua pernyataan pada bagian ini memperoleh nilai penuh. Pertahankan dan evaluasi secara berkala.</p>';
+   recHtml+='</div>';
+ });
+ $("recommendations").innerHTML=recHtml;
+ $("results").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function saveData(){
+ const data={version:2,profile:getProfile(),answers};
+ try{localStorage.setItem("pamanKamiSimulasi",JSON.stringify(data));$("saveStatus").textContent="Simpanan tersimpan pada browser/perangkat ini.";}
+ catch(e){$("saveStatus").textContent="Browser tidak mengizinkan penyimpanan lokal.";}
+}
+function loadData(){
+ try{const raw=localStorage.getItem("pamanKamiSimulasi");if(!raw){$("saveStatus").textContent="Belum ada simpanan pada browser ini.";return;}
+ const data=JSON.parse(raw);if(data.profile){$("business").value=data.profile.business||"";$("owner").value=data.profile.owner||"";$("sector").value=data.profile.sector||"";$("date").value=data.profile.date||"";$("notes").value=data.profile.notes||"";}
+ Object.keys(answers).forEach(k=>delete answers[k]);Object.assign(answers,data.answers||{});
+ QUESTIONS.forEach((q,i)=>{const selected=document.querySelector('input[name="q'+i+'"][value="'+answers[i]+'"]');if(selected)selected.checked=true;});
+ updateProgress();$("saveStatus").textContent="Simpanan dimuat.";
+ }catch(e){$("saveStatus").textContent="Simpanan tidak dapat dibaca.";}
+}
+function resetForm(){
+ if(!confirm("Hapus semua jawaban dan mulai ulang?"))return;
+ Object.keys(answers).forEach(k=>delete answers[k]);$("assessmentForm").reset();$("results").classList.add("hidden");updateProgress();window.scrollTo({top:0,behavior:"smooth"});
+}
+$("assessmentForm").addEventListener("submit",e=>{e.preventDefault();showResults();});
+$("showResultBtn").addEventListener("click",showResults);$("saveBtn").addEventListener("click",saveData);$("loadBtn").addEventListener("click",loadData);
+$("resetBtn").addEventListener("click",resetForm);$("pdfBtn").addEventListener("click",()=>window.print());
+$("editBtn").addEventListener("click",()=>$("assessmentForm").scrollIntoView({behavior:"smooth",block:"start"}));
+renderQuestions();updateProgress();
+</script>
+</body></html>
