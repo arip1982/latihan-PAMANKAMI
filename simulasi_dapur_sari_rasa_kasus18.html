@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Simulasi 01 — Studi Kasus 18: Dapur Sari Rasa</title>
+<style>
+:root{--navy:#10266f;--blue:#1769c2;--gold:#ffc928;--green:#11845b;--purple:#7542cb;--ink:#17233f;--muted:#65738b;--line:#dbe5f0;--bg:#f3f7fc}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Segoe UI",Arial,sans-serif}
+header{background:white;border-bottom:1px solid var(--line);padding:16px clamp(16px,4vw,40px);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.org{font-size:12px;font-weight:800;color:var(--navy);line-height:1.3}.org span{display:inline-block;margin-left:12px;padding-left:12px;border-left:1px solid #b7c3d4;color:#4e6177}
+main{max-width:1100px;margin:24px auto;padding:0 16px 40px}.hero{display:flex;gap:16px;align-items:center;margin-bottom:20px}.number{width:76px;height:76px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:white;font-size:42px;font-weight:900}.hero h1{margin:0;color:var(--navy);font-size:clamp(24px,3vw,36px);line-height:1.12}.hero p{margin:7px 0 0;color:var(--navy)}
+.layout{display:grid;grid-template-columns:1.02fr 1fr;gap:18px}.panel{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 7px 24px #18345e0a}.panel-title{padding:13px 18px;background:#e8f4ff;color:var(--navy);font-weight:850;font-size:18px}.story{padding:18px 20px}.story p{margin:0 0 12px}.quote{padding:14px;border-radius:13px;background:#fff4c7;color:var(--navy);font-weight:750;margin-top:16px}.section-note{color:var(--muted);font-size:13px;margin:12px 0}
+.progressbox{margin:12px;padding:13px;border:1px solid var(--line);border-radius:13px;background:#f8fbff}.progressmeta{display:flex;justify-content:space-between;gap:10px;font-size:13px;font-weight:800;color:var(--navy);margin-bottom:8px}.progressbar{height:10px;border-radius:99px;background:#e1e8f2;overflow:hidden}.progressbar span{display:block;width:0;height:100%;background:linear-gradient(90deg,#1769c2,#11845b);transition:width .2s}.progresshint{font-size:12px;color:var(--muted);margin-top:7px}.questions{padding:12px}.q{border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-bottom:12px}.q:last-child{margin-bottom:0}.qhead{display:flex;gap:10px;padding:12px;background:#f8fbff;align-items:flex-start}.qnum{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;background:var(--blue);color:white;font-weight:900}.qtext{font-weight:750;padding-top:3px}.type{font-size:11px;color:var(--muted);font-weight:600;display:block;margin-top:3px}.choices{padding:12px;display:grid;gap:8px}.choice{display:flex;gap:9px;align-items:flex-start;border:1px solid #e0e8f2;border-radius:10px;padding:9px 10px;cursor:pointer;background:white}.choice:has(input:checked){background:#edf6ff;border-color:#6ca9e7}.choice input{margin-top:5px;accent-color:var(--blue)}.qhelp{padding:0 12px 12px;color:var(--muted);font-size:12px}.openarea{padding:12px}.openarea label{display:block;font-weight:800;margin:0 0 8px}.openarea textarea{width:100%;min-height:130px;resize:vertical;padding:12px;border:1px solid #cbd7e7;border-radius:10px;font:inherit}.field{margin:0 0 14px}.field label{display:block;font-weight:750;margin-bottom:6px}.field input{width:100%;padding:10px 12px;border:1px solid #cbd7e7;border-radius:10px;font:inherit}.btnrow{display:flex;gap:10px;flex-wrap:wrap;padding:14px 12px}.btn{border:0;border-radius:10px;padding:11px 15px;font:inherit;font-weight:800;cursor:pointer}.btn:disabled{opacity:.45;cursor:not-allowed}.primary{background:var(--blue);color:white}.secondary{background:#e9eff7;color:var(--navy)}.green{background:var(--green);color:white}.result{display:none;margin-top:18px;background:white;border:1px solid var(--line);border-radius:18px;padding:20px}.result.show{display:block}.result h2{color:var(--navy);margin-top:0}.result h3{margin-bottom:5px}.score{font-size:28px;font-weight:900;color:var(--green)}.review{padding-left:22px}.review li{margin:8px 0}.footnote{text-align:center;color:var(--muted);font-size:12px;margin-top:20px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.hero{align-items:flex-start}.number{width:60px;height:60px;font-size:32px}.story{padding:15px}}
+@media print{body{background:white}header{padding:8px 0}.btnrow{display:none}.layout{grid-template-columns:1fr}.panel,.result{box-shadow:none;break-inside:avoid}.result{display:block!important}}
+</style></head>
+<body>
+<header><div class="org">BADAN SIBER DAN SANDI NEGARA <span>KEMENTERIAN PERDAGANGAN<br>Training of Trainers (ToT) Fasilitator Edukasi PMSE untuk UMKM</span></div><strong style="color:#1769c2">SIMULASI PEMBELAJARAN</strong></header>
+<main>
+<div class="hero"><div class="number">18</div><div><h1>Studi Kasus: Dapur Sari Rasa</h1><p>Bacalah cerita berikut, kemudian jawab pertanyaan bersama kelompok.</p></div></div>
+<div class="layout">
+<section class="panel">
+<div class="panel-title">📄 Cerita</div>
+<div class="story">
+<p><b>Dapur Sari Rasa</b> adalah usaha makanan rumahan yang menjual nasi kotak, kue, dan makanan ringan. Usaha ini menerima pesanan melalui WhatsApp Business dan marketplace, serta mempromosikan produk melalui media sosial seperti Instagram dan TikTok.</p>
+<p>Pemilik usaha menggunakan satu smartphone untuk menjalankan bisnis sekaligus keperluan pribadi. HP tersebut digunakan untuk mengelola pesanan, membuka email, mengakses marketplace, mengelola akun media sosial, menggunakan aplikasi bank, dan berkomunikasi dengan keluarga.</p>
+<p>Agar mudah diingat, kata sandi email dan marketplace dibuat sama. Verifikasi tambahan untuk melindungi akun juga belum diaktifkan.</p>
+<p>Catatan pesanan, nama pelanggan, nomor telepon, alamat pengiriman, foto produk, konten promosi, dan bukti pembayaran disimpan di HP. Jika membutuhkan catatan lama, pemilik membuka kembali chat atau foto yang tersimpan. Namun, data tersebut belum dicadangkan secara rutin ke tempat penyimpanan lain.</p>
+<p>Pemilik merasa usahanya masih kecil dan pelanggannya belum banyak, sehingga pengamanan tambahan dianggap belum terlalu diperlukan.</p>
+<div class="quote">“Usaha saya masih kecil dan hanya menggunakan satu HP. Apa yang bisa saya lakukan agar akun, media sosial, dan data usaha lebih aman tanpa harus membeli HP baru atau mengeluarkan banyak biaya?”</div>
+</div>
+</section>
+<section class="panel">
+<div class="panel-title">❓ Pertanyaan untuk Peserta</div>
+<div class="progressbox" aria-live="polite"><div class="progressmeta"><span id="progressText">Progres pengisian</span><span id="progressPercent">0%</span></div><div class="progressbar"><span id="progressFill"></span></div><div class="progresshint" id="progressHint">Isi 4 pertanyaan tertutup dan 1 pertanyaan terbuka sebelum memeriksa jawaban.</div></div>
+<div class="questions">
+<div class="q"><div class="qhead"><div class="qnum">1</div><div class="qtext">Perangkat, akun, dan data apa saja yang digunakan untuk menjalankan usaha tersebut?<span class="type">Pilih semua jawaban yang sesuai (boleh lebih dari satu).</span></div></div>
+<div class="choices">
+<label class="choice"><input type="checkbox" name="q1" value="Smartphone yang digunakan untuk bisnis dan pribadi"><span>Smartphone yang digunakan untuk bisnis dan pribadi</span></label>
+<label class="choice"><input type="checkbox" name="q1" value="WhatsApp Business dan akun marketplace"><span>WhatsApp Business dan akun marketplace</span></label>
+<label class="choice"><input type="checkbox" name="q1" value="Email dan akun media sosial"><span>Email dan akun media sosial</span></label>
+<label class="choice"><input type="checkbox" name="q1" value="Aplikasi bank dan data transaksi"><span>Aplikasi bank dan data transaksi</span></label>
+<label class="choice"><input type="checkbox" name="q1" value="Data pelanggan, pesanan, foto produk, dan bukti pembayaran"><span>Data pelanggan, pesanan, foto produk, dan bukti pembayaran</span></label>
+<label class="choice"><input type="checkbox" name="q1" value="Aplikasi edit video profesional berbayar yang tidak disebutkan dalam cerita"><span>Aplikasi edit video profesional berbayar yang tidak disebutkan dalam cerita</span></label>
+</div></div>
+<div class="q"><div class="qhead"><div class="qnum">2</div><div class="qtext">Kebiasaan mana yang berpotensi menimbulkan masalah keamanan?<span class="type">Pilih semua jawaban yang sesuai (boleh lebih dari satu).</span></div></div>
+<div class="choices">
+<label class="choice"><input type="checkbox" name="q2" value="Kata sandi email dan marketplace sama"><span>Kata sandi email dan marketplace sama</span></label>
+<label class="choice"><input type="checkbox" name="q2" value="Verifikasi tambahan belum diaktifkan"><span>Verifikasi tambahan belum diaktifkan</span></label>
+<label class="choice"><input type="checkbox" name="q2" value="Data hanya tersimpan di HP dan belum dicadangkan rutin"><span>Data hanya tersimpan di HP dan belum dicadangkan rutin</span></label>
+<label class="choice"><input type="checkbox" name="q2" value="Satu HP digunakan untuk bisnis dan pribadi"><span>Satu HP digunakan untuk bisnis dan pribadi</span></label>
+<label class="choice"><input type="checkbox" name="q2" value="Menggunakan WhatsApp Business untuk menerima pesanan"><span>Menggunakan WhatsApp Business untuk menerima pesanan</span></label>
+</div></div>
+<div class="q"><div class="qhead"><div class="qnum">3</div><div class="qtext">Apa dampaknya jika HP hilang atau akun email, marketplace, maupun media sosial diambil alih orang lain?<span class="type">Pilih semua dampak yang mungkin terjadi.</span></div></div>
+<div class="choices">
+<label class="choice"><input type="checkbox" name="q3" value="Pesanan dan komunikasi pelanggan terganggu"><span>Pesanan dan komunikasi pelanggan terganggu</span></label>
+<label class="choice"><input type="checkbox" name="q3" value="Data pelanggan atau informasi usaha bocor"><span>Data pelanggan atau informasi usaha bocor</span></label>
+<label class="choice"><input type="checkbox" name="q3" value="Pelaku menyalahgunakan akun untuk menipu pelanggan"><span>Pelaku menyalahgunakan akun untuk menipu pelanggan</span></label>
+<label class="choice"><input type="checkbox" name="q3" value="Kerugian finansial atau akses ke aplikasi bank berisiko"><span>Kerugian finansial atau akses ke aplikasi bank berisiko</span></label>
+<label class="choice"><input type="checkbox" name="q3" value="Tidak ada dampak karena usaha masih kecil"><span>Tidak ada dampak karena usaha masih kecil</span></label>
+</div></div>
+<div class="q"><div class="qhead"><div class="qnum">4</div><div class="qtext">Pilih tiga tindakan yang paling mudah dan penting untuk dilakukan terlebih dahulu.<span class="type">Pilih tepat tiga jawaban.</span></div></div>
+<div class="choices" id="q4choices">
+<label class="choice"><input type="checkbox" name="q4" value="Buat kata sandi berbeda untuk setiap akun penting"><span>Buat kata sandi berbeda untuk setiap akun penting</span></label>
+<label class="choice"><input type="checkbox" name="q4" value="Aktifkan verifikasi dua langkah pada akun penting"><span>Aktifkan verifikasi dua langkah pada akun penting</span></label>
+<label class="choice"><input type="checkbox" name="q4" value="Cadangkan data usaha secara rutin ke tempat aman"><span>Cadangkan data usaha secara rutin ke tempat aman</span></label>
+<label class="choice"><input type="checkbox" name="q4" value="Bagikan kode OTP kepada orang yang mengaku petugas"><span>Bagikan kode OTP kepada orang yang mengaku petugas</span></label>
+<label class="choice"><input type="checkbox" name="q4" value="Abaikan pembaruan keamanan dan tautan mencurigakan"><span>Abaikan pembaruan keamanan dan tautan mencurigakan</span></label>
+<label class="choice"><input type="checkbox" name="q4" value="Tunda semua pengamanan sampai usaha menjadi besar"><span>Tunda semua pengamanan sampai usaha menjadi besar</span></label>
+</div><div class="qhelp" id="q4help">Dipilih: 0 dari 3</div></div>
+<div class="q"><div class="qhead"><div class="qnum">5</div><div class="qtext">Bagaimana menjelaskan saran tersebut dengan bahasa sederhana agar mudah dipahami pemilik usaha?<span class="type">Jawaban terbuka — tulis dengan kata-kata Anda sendiri.</span></div></div>
+<div class="openarea"><label for="openAnswer">Jawaban kelompok</label><textarea id="openAnswer" placeholder="Tuliskan cara Anda menjelaskan saran keamanan kepada pemilik usaha."></textarea></div></div>
+<div class="btnrow"><button class="btn primary" id="submit">Periksa pilihan & lihat ringkasan</button><button class="btn secondary" id="reset">Ulangi</button></div>
+</div>
+</section></div>
+<section class="result" id="result"><h2>Ringkasan Jawaban Peserta / Kelompok</h2><div class="field"><label for="participant">Nama peserta / kelompok</label><input id="participant" placeholder="Isi nama peserta atau kelompok"></div><div class="field"><label for="business">Nama usaha (opsional)</label><input id="business" placeholder="Nama usaha"></div><div class="score" id="score">Pilihan selesai</div><p id="summary"></p><h3>Umpan balik fasilitator</h3><ul class="review" id="review"></ul><h3>Jawaban terbuka kelompok</h3><p id="openReview"></p><div class="btnrow"><button class="btn green" id="pdf">Cetak / Simpan PDF</button><button class="btn secondary" id="copy">Salin ringkasan</button></div></section>
+<p class="footnote">Simulasi pembelajaran berdasarkan studi kasus pada materi. Untuk penilaian formal, gunakan instrumen dan panduan resmi PAMAN KAMI.</p>
+</main>
+<script>
+const correct={
+q1:["Smartphone yang digunakan untuk bisnis dan pribadi","WhatsApp Business dan akun marketplace","Email dan akun media sosial","Aplikasi bank dan data transaksi","Data pelanggan, pesanan, foto produk, dan bukti pembayaran"],
+q2:["Kata sandi email dan marketplace sama","Verifikasi tambahan belum diaktifkan","Data hanya tersimpan di HP dan belum dicadangkan rutin","Satu HP digunakan untuk bisnis dan pribadi"],
+q3:["Pesanan dan komunikasi pelanggan terganggu","Data pelanggan atau informasi usaha bocor","Pelaku menyalahgunakan akun untuk menipu pelanggan","Kerugian finansial atau akses ke aplikasi bank berisiko"],
+q4:["Buat kata sandi berbeda untuk setiap akun penting","Aktifkan verifikasi dua langkah pada akun penting","Cadangkan data usaha secara rutin ke tempat aman"]
+};
+const labels={q1:"Perangkat, akun, dan data",q2:"Kebiasaan berisiko",q3:"Dampak yang mungkin terjadi",q4:"Tiga tindakan prioritas"};
+const explanations={
+q1:"Pilihan yang sesuai adalah smartphone, WhatsApp Business/marketplace, email/media sosial, aplikasi bank, serta data pelanggan, pesanan, foto produk, dan bukti pembayaran. Aplikasi edit video profesional berbayar tidak disebutkan dalam cerita, sehingga jangan dipilih.",
+q2:"Kata sandi yang sama, belum mengaktifkan verifikasi tambahan, tidak memiliki cadangan rutin, serta mencampur penggunaan bisnis dan pribadi dapat meningkatkan risiko. WhatsApp Business sendiri bukan kebiasaan berbahaya; tetap gunakan dengan pengamanan yang baik.",
+q3:"Kehilangan HP atau pengambilalihan akun dapat mengganggu pesanan, membocorkan data, membuka peluang penipuan, dan menimbulkan risiko finansial. Usaha kecil tetap dapat terdampak.",
+q4:"Tiga prioritas yang realistis adalah kata sandi unik untuk setiap akun penting, verifikasi dua langkah, dan pencadangan data secara rutin. Jangan membagikan OTP dan jangan menunda pengamanan."
+};
+function selected(name){return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value)}
+function progressState(){
+ const answeredGroups=['q1','q2','q3'].filter(k=>selected(k).length>0).length;
+ const q4count=selected('q4').length;
+ const q4done=q4count===3;
+ const openDone=document.getElementById('openAnswer').value.trim().length>0;
+ const completed=answeredGroups+(q4done?1:0)+(openDone?1:0);
+ const total=5;const pct=Math.round(completed/total*100);
+ document.getElementById('progressText').textContent=`${completed} dari ${total} bagian selesai`;
+ document.getElementById('progressPercent').textContent=pct+'%';
+ document.getElementById('progressFill').style.width=pct+'%';
+ let hint=[];
+ if(answeredGroups<3)hint.push(`${3-answeredGroups} pertanyaan checklist belum dijawab`);
+ if(!q4done)hint.push(q4count===0?'Pertanyaan 4 belum dijawab (pilih tepat 3)':`Pertanyaan 4: pilih ${3-q4count>0?`${3-q4count} lagi`:`hapus ${q4count-3}`} agar tepat 3`);
+ if(!openDone)hint.push('Jawaban terbuka belum diisi');
+ document.getElementById('progressHint').textContent=completed===total?'Semua bagian sudah diisi. Anda dapat memeriksa jawaban.':hint.join(' • ');
+ document.getElementById('submit').disabled=completed!==total;
+ document.getElementById('submit').title=completed===total?'Periksa semua jawaban':'Lengkapi semua pertanyaan terlebih dahulu';
+ return completed===total;
+}
+document.querySelectorAll('input[name="q1"],input[name="q2"],input[name="q3"]').forEach(el=>el.addEventListener('change',progressState));
+document.getElementById('openAnswer').addEventListener('input',progressState);
+document.querySelectorAll('input[name="q4"]').forEach(el=>el.addEventListener('change',()=>{
+ const all=document.querySelectorAll('input[name="q4"]');
+ if(selected('q4').length>=3){all.forEach(x=>{if(!x.checked)x.disabled=true})}else all.forEach(x=>x.disabled=false);
+ document.getElementById('q4help').textContent=`Dipilih: ${selected('q4').length} dari 3`;
+ progressState();
+}));
+document.getElementById('submit').addEventListener('click',()=>{
+ if(!progressState()){alert('Mohon lengkapi semua pertanyaan terlebih dahulu. Pertanyaan 4 harus tepat tiga pilihan.');return;}
+ const review=document.getElementById('review');review.innerHTML='';let exact=0;
+ ['q1','q2','q3','q4'].forEach(k=>{
+  const got=selected(k),want=correct[k];const right=got.filter(x=>want.includes(x)).length,wrong=got.filter(x=>!want.includes(x)).length;
+  const isExact=wrong===0&&right===want.length&&(k!=='q4'||got.length===3);
+  if(isExact)exact++;
+  const li=document.createElement('li');
+  const picked=got.length?got.join('; '):'Belum ada pilihan';
+  const missed=want.filter(x=>!got.includes(x));
+  let status=isExact?'✅ Tepat.':'🔎 Perlu ditinjau.';
+  let detail='';
+  if(k==='q4' && got.length!==3) detail=` Anda memilih ${got.length}; instruksi meminta tepat 3 pilihan.`;
+  if(missed.length) detail+=` Pilihan yang sesuai tetapi belum dipilih: ${missed.join('; ')}.`;
+  if(wrong) detail+=` Pilihan yang tidak sesuai dan sebaiknya tidak dipilih: ${got.filter(x=>!want.includes(x)).join('; ')}.`;
+  li.innerHTML=`<b>${labels[k]} — ${status}</b><br><span><b>Jawaban Anda:</b> ${escapeHtml(picked)}</span><br><span><b>Jawaban yang diharapkan:</b> ${escapeHtml(want.join('; '))}</span><br><span><b>Feedback:</b> ${escapeHtml(explanations[k]+detail)}</span>`;
+  review.appendChild(li);
+ });
+ const open=document.getElementById('openAnswer').value.trim();
+ const openLi=document.createElement('li');
+ openLi.innerHTML='<b>Pertanyaan terbuka — panduan feedback fasilitator</b><br>'+(
+  open ? 'Jawaban Anda: '+escapeHtml(open)+'<br><b>Contoh jawaban yang baik:</b> “Gunakan kata sandi berbeda untuk email dan marketplace, aktifkan verifikasi dua langkah, simpan cadangan data pesanan di tempat aman, jangan berikan kode OTP kepada siapa pun, dan perbarui aplikasi melalui toko resmi.”<br><b>Kriteria feedback:</b> (1) menyebut tindakan keamanan yang relevan; (2) menjelaskan dengan bahasa sederhana; (3) memberi saran yang realistis tanpa biaya besar. Jawaban terbuka tidak dinilai otomatis benar/salah; fasilitator menggunakan kriteria ini untuk memberi feedback.' :
+  'Belum dijawab. Minta kelompok menjelaskan saran keamanan dengan bahasa sehari-hari. Jawaban yang baik menyebut tindakan yang realistis, alasannya, dan cara melakukannya.'
+ );
+ review.appendChild(openLi);
+ document.getElementById('score').textContent=`${exact}/4 kelompok pertanyaan tertutup sesuai panduan`;
+ document.getElementById('summary').textContent='Peserta/kelompok: '+(document.getElementById('participant').value.trim()||'Belum diisi')+' | Usaha: '+(document.getElementById('business').value.trim()||'Dapur Sari Rasa')+'. Skor ini adalah umpan balik latihan, bukan skor resmi PAMAN KAMI. Setiap pertanyaan menampilkan jawaban peserta, jawaban yang diharapkan, dan feedback. Jawaban terbuka disertai contoh jawaban serta kriteria penilaian fasilitator.';
+ document.getElementById('openReview').textContent=open||'Belum diisi. Fasilitator dapat meminta kelompok menjelaskan saran dengan bahasa sehari-hari.';
+ document.getElementById('result').classList.add('show');document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+});
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+document.getElementById('reset').addEventListener('click',()=>{document.querySelectorAll('input[type=checkbox]').forEach(x=>{x.checked=false;x.disabled=false});document.getElementById('openAnswer').value='';document.getElementById('q4help').textContent='Dipilih: 0 dari 3';document.getElementById('result').classList.remove('show');progressState();window.scrollTo({top:0,behavior:'smooth'})});
+document.getElementById('pdf').addEventListener('click',()=>window.print());
+progressState();
+document.getElementById('copy').addEventListener('click',()=>{
+ let t='RINGKASAN SIMULASI STUDI KASUS UMKM\nPeserta/kelompok: '+(document.getElementById('participant').value||'Belum diisi')+'\nUsaha: '+(document.getElementById('business').value||'Dapur Sari Rasa')+'\n'+document.getElementById('score').textContent+'\n\n';
+ ['q1','q2','q3','q4'].forEach(k=>{t+=labels[k]+':\n'+(selected(k).join('; ')||'Belum dijawab')+'\nPanduan: '+explanations[k]+'\n\n'});
+ t+='Jawaban terbuka: '+(document.getElementById('openAnswer').value||'Belum diisi')+'\nCatatan: jawaban terbuka perlu dinilai fasilitator berdasarkan relevansi, kejelasan, dan kelayakan saran.';
+ const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();alert('Ringkasan disalin.');
+});
+</script></body></html>
